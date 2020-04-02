@@ -34,7 +34,7 @@ This is going to be our metrics repo.
 Error logfile: /var/log/influxdb/influxd.log
 Config file: /etc/influxdb/influxdb.conf
 
-If you want to store data other than default location. Change it in config file.
+If you want to store the data in other than default location, change it in config file.
 Make sure to create "meta", "data" and "wal" directories and change ownership to influxdb.
 At line 24:
  [meta]
