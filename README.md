@@ -28,8 +28,9 @@ Preparing...                ########################################### [100%]
    3:influxdb               ########################################### [100%]
 
 
-Configure influxdb: This is going to be our metrics repo.
-==================
+Influxdb: 
+========
+This is going to be our metrics repo.
 Error logfile: /var/log/influxdb/influxd.log
 Config file: /etc/influxdb/influxdb.conf
 
@@ -37,12 +38,10 @@ If you want to store data other than default location. Change it in config file.
 Make sure to create "meta", "data" and "wal" directories and change ownership to influxdb.
 At line 24:
  [meta]
- # Where the metadata/raft database is stored
     dir = "/home/tick/influxdb/meta"
 
 At line 43:
 [data]
- # The directory where the TSM storage engine stores TSM files.
     dir = "/home/tick/influxdb/data"
 
     # The directory where the TSM storage engine stores WAL files.
