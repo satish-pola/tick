@@ -80,6 +80,7 @@ For configuring telegraf,
 
 
 Create monitor username and password in "to be monitored db" (mysql/Mariadb):
+
 mysql> create user 'mysql_monitor'@'localhost' identified by "mYSQlPwd2";
 Query OK, 0 rows affected (0.00 sec)
 
@@ -98,6 +99,7 @@ Open config file (/etc/telegraf/telegraf.conf),
     a. Also uncomment required matrics variable under this plugin.
 
 Restart Telegraf and make sure no errors in "/var/log/telegraf/telegraf.log".
+
 service telegraf restart
 telegraf process was stopped [ OK ]
 Starting the process telegraf [ OK ]
@@ -139,6 +141,7 @@ system
 we can do queries like regular sql & make sure there are some values. ex: select * from cpu;
 
 Now, create a user in influxdb which will be used in configuring chronograf in the next step.
+
 >CREATE USER telegraf_user WITH PASSWORD "*******" WITH ALL PRIVILEGES;
 > show users;
 user          admin
