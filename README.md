@@ -36,6 +36,7 @@ Config file: /etc/influxdb/influxdb.conf
 
 If you want to store the data in other than default location, change it in config file.
 Make sure to create "meta", "data" and "wal" directories and change ownership to influxdb.
+
 At line 24:
  [meta]
     dir = "/home/tick/influxdb/meta"
