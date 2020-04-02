@@ -4,15 +4,18 @@ Download tick stack:
 ====================
 https://portal.influxdata.com/downloads/
 
-1. Download required rpms to your laptop and then move to target system.
-    Choose the rpm built for RedHat & CentOS
+Download required rpms to your laptop and then move to target system.Choose the rpm built for RedHat & CentOS
+    
 TeleGraf -- v.1.14.0
+
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.14.0-1.x86_64.rpm
 
 InfluxDB -- v1.7.10
+
 wget https://dl.influxdata.com/influxdb/releases/influxdb-1.7.10.x86_64.rpm
 
 Chronograf -- v1.8.0
+
 wget https://dl.influxdata.com/chronograf/releases/chronograf-1.8.0.x86_64.rpm
 
 
