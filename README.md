@@ -53,11 +53,15 @@ At line 43:
     cache-snapshot-memory-size = "250m"
     cache-snapshot-write-cold-duration = "100m"
 
+
  Start InfluxDB:
+ 
  service influxdb restart  (CentOS 7 systemctl )
+ 
  Check if there any issues in error logfile (/var/log/influxdb/influxd.log)
 
  If everything goes fine, you can see below process.
+ 
  ps -ef | grep influx
  influxdb  6700     1  2 11:54 ?        00:00:10 /usr/bin/influxd -pidfile /var/run/influxdb/influxd.pid -config /etc/influxdb/influxdb.conf
 
