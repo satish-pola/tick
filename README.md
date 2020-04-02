@@ -21,21 +21,11 @@ scp *.rpm username@<server>:/home/tracerx/tick
 
 
 Install them:
-# rpm -ivh chronograf-1.8.0.x86_64.rpm influxdb-1.7.10.x86_64.rpm telegraf-1.14.0-1.x86_64.rpm
+rpm -ivh chronograf-1.8.0.x86_64.rpm influxdb-1.7.10.x86_64.rpm telegraf-1.14.0-1.x86_64.rpm
 Preparing...                ########################################### [100%]
    1:chronograf             ########################################### [100%]
    2:telegraf               ########################################### [ 50%]
    3:influxdb               ########################################### [100%]
-[root@kwikemart2 tick]#
-
-
-
-No need to configure chronograh: Once it is installed, we can easily do
-
-Add below to IP Tables: iptables -L
-cat /etc/sysconfig/iptables
--A INPUT -p tcp --dport 8888 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
--A OUTPUT -p tcp --sport 8888 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
 
 Configure influxdb: This is going to be our metrics repo.
@@ -106,23 +96,72 @@ telegraf process was stopped [ OK ]
 Starting the process telegraf [ OK ]
 telegraf process was started [ OK ]
 
+Check if the measurements are in influxdb or not.
 
-ChronoGraf:
-==========
+$ influx
+Connected to http://localhost:8086 version 1.7.10
+InfluxDB shell version: 1.7.10
+> show databases;
+name: databases
+name
+----
+_internal
+telegraf
+> use telegraf
+Using database telegraf
+> show measurements
+name: measurements
+name
+----
+cpu
+disk
+diskio
+kernel
+mem
+mysql
+mysql_info_schema
+mysql_innodb
+mysql_perf_schema
+mysql_users
+net
+processes
+swap
+system
+>
 
-Follow below screenshots.
-https://www.influxdata.com/blog/how-predefined-dashboards-influxdatas-chronograf-make-metrics-simple-blog-post/
+we can do queries like regular sql & make sure there are some values. ex: select * from cpu;
 
-1.
-user admin
----- -----
-> CREATE USER telegraf_user WITH PASSWORD 'admin1' WITH ALL PRIVILEGES;
+Now, create a user in influxdb which will be used in configuring chronograf in the next step.
+>CREATE USER telegraf_user WITH PASSWORD "*******" WITH ALL PRIVILEGES;
 > show users;
 user          admin
 ----          -----
 telegraf_user true
 
+
+ChronoGraf:
+==========
+Open "vi /etc/init.d/chronograf" and at line 15 change "export HOST="0.0.0.0"" to HostIP like "export HOST="10.125.34.132""
+Restart chronograf server:
+    service chronograf restart
+
+Now we can be able to see the chronograf in the browser.
+http://10.125.34.132:8888
+
+Follow below screenshots (Enter influxdb username & password in the second screenshot). 
+https://www.influxdata.com/blog/how-predefined-dashboards-influxdatas-chronograf-make-metrics-simple-blog-post/
+
+
+Common issues: 
+=============
+Chronograf url does't in browser even though process is running. It could be due to iptables. Check them out 
+
+Check iptables: iptables -L
+ 
+If there are some rules, add 8888 port to it as below. 
+
+Add below to IP Tables(/etc/sysconfig/iptables)
 -A INPUT -p tcp --dport 8888 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 -A OUTPUT -p tcp --sport 8888 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
-
+Restart iptables: service iptables restart. 
